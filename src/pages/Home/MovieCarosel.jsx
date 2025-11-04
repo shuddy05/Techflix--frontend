@@ -60,7 +60,7 @@ const MovieCarousel = ({ data, updateUI }) => {
                   </button>
                 </div>
                 <div className=" absolute z-10 top-[5px] right-[5px] text-white cursor-pointer rounded-full hover:bg-white/40 w-[50px] h-[50px]  flex items-center justify-center  ">
-                {bookmarkIcon}
+                  {bookmarkIcon}
                 </div>
               </div>
 
@@ -81,7 +81,7 @@ const MovieCarousel = ({ data, updateUI }) => {
                   </p>
                   <p className="m-0">{rated}</p>
                 </div>
-                <p className="m-0 text-white text-[24px] font-normal ">
+                <p className="m-0 text-white md:text-[24px] font-normal ">
                   {title}
                 </p>
               </div>
