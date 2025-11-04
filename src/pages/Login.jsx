@@ -1,10 +1,14 @@
 import React from "react";
 import Logo from "../assets/logo.svg";
 import { Link } from "react-router-dom";
-import { loginSchema } from "./utils/FormValidators";
+import { loginSchema } from "../utils/FormValidators";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import useAuth from "../hooks/useAuth";
 const Login = () => {
+  const { handleLoginUser, authenticating } = useAuth();
+  const btnText = authenticating ? "Loading" : "Login to your account";
+
   const {
     register,
     handleSubmit,
@@ -12,6 +16,7 @@ const Login = () => {
   } = useForm({ resolver: yupResolver(loginSchema) });
 
   const handleLogin = (data) => {
+    handleLoginUser(data);
     console.log(data);
   };
   return (
@@ -28,7 +33,7 @@ const Login = () => {
           <input
             type="email"
             placeholder="Email Address"
-            className={`border-b  w-full p-3 focus:outline-none caret-[#FC4747] ${ 
+            className={`border-b  w-full p-3 focus:outline-none caret-[#FC4747] ${
               errors.email ? "border-b-[#FC4747]" : "border-b-[#5A698F]"
             }`}
             {...register("email")}
@@ -52,10 +57,11 @@ const Login = () => {
         </div>
 
         <button
+          disabled={authenticating}
           type="submit"
-          className="bg-[#FC4747] rounded-md text-[15px] w-full h-[48px] hover:text-[#161D2f] hover:bg-white "
+          className="bg-[#FC4747] cursor-pointer rounded-md text-[15px] w-full h-[48px] hover:text-[#161D2f] hover:bg-white "
         >
-          Login to your account
+          {btnText}
         </button>
         <p className="text-center text-[15px] mt-6 ">
           Don't have an account?{" "}

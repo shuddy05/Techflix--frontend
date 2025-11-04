@@ -2,9 +2,14 @@ import React from "react";
 import Logo from "../assets/logo.svg";
 import { Link } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { registerSchema } from "./utils/FormValidators";
+import { registerSchema } from "../utils/FormValidators";
 import { useForm } from "react-hook-form";
+import useAuth from "../hooks/useAuth";
+
 const Register = () => {
+  const { handleRegisterUser, authenticating } = useAuth();
+  const btnText = authenticating ? "Loading" : "Create account";
+   
   const {
     register,
     handleSubmit,
@@ -12,6 +17,7 @@ const Register = () => {
   } = useForm({ resolver: yupResolver(registerSchema) });
 
   const handleRegister = (data) => {
+    handleRegisterUser(data);
     console.log(data);
   };
 
@@ -67,10 +73,11 @@ const Register = () => {
           </small>
         </div>
         <button
+          disabled={authenticating}
           type="submit"
-          className="bg-[#FC4747] rounded-md text-[15px] w-full h-[48px] hover:text-[#161D2f] hover:bg-white "
+          className="bg-[#FC4747] cursor-pointer rounded-md text-[15px] w-full h-[48px] hover:text-[#161D2f] hover:bg-white "
         >
-          Create account
+          {btnText}
         </button>
         <p className="text-center text-[15px] mt-6 ">
           Already have an account?{" "}

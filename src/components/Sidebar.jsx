@@ -1,73 +1,60 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import Logo from "../assets/logo.svg";
-import profilePicture from "../assets/Oval.svg";
-import { NavLink } from "react-router-dom";
-import { FaThLarge } from "react-icons/fa";
-import { FaBookmark } from "react-icons/fa";
+import { PiTelevisionFill } from "react-icons/pi";
+import { MdWindow } from "react-icons/md";
 import { RiFilmFill } from "react-icons/ri";
-import { IoMdVideocam } from "react-icons/io";
+import { FaBookmark } from "react-icons/fa";
+import logo from "../assets/Oval.svg";
+import redmovie from "../assets/logo.svg";
+import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 const Sidebar = () => {
   const links = [
     {
       id: 1,
       to: "/",
-      content: <FaThLarge size={20} className="hover:text-[#FC4747]" />,
+      content: (
+        <MdWindow className="hover:text-[#FC4747] text-[16px] md:text-[20px]" />
+      ),
       title: "dashboard home",
     },
     {
       id: 2,
       to: "movies",
-      content: <RiFilmFill size={20} className="hover:text-[#FC4747]" />,
+      content: (
+        <RiFilmFill className="hover:text-[#FC4747] text-[16px] md:text-[20px]" />
+      ),
       title: "dashboard home",
     },
     {
       id: 3,
       to: "tv-series",
-      content: <IoMdVideocam size={20} className="hover:text-[#FC4747]" />,
+      content: (
+        <PiTelevisionFill className="hover:text-[#FC4747] text-[16px] md:text-[20px]" />
+      ),
       title: "dashboard home",
     },
     {
       id: 4,
-      to: "bookmarked",
-      content: <FaBookmark size={20} className="hover:text-[#FC4747]" />,
+      to: "bookmark",
+      content: (
+        <FaBookmark className="hover:text-[#FC4747] text-[16px] md:text-[20px]" />
+      ),
       title: "dashboard home",
     },
   ];
-  return (
-    <div>
-      <div className=" hidden lg:flex sticky top-0   max-w-[96px] h-[960px] bg-[#161D2F] rounded-[20px] py-[35px] px-[32px] ">
-        <div className="flex flex-col justify-between ">
-          <div className="flex flex-col gap-[74px] items-center">
-            <NavLink to="/">
-              <img src={Logo} alt="logo" />{" "}
-            </NavLink>
-            <div className="flex lg:flex-col gap-[40px]   ">
-              {links.map((link) => {
-                const { id, title, to, content } = link;
-                return (
-                  <NavLink
-                    key={id}
-                    to={to}
-                    className={({ isActive }) =>
-                      isActive ? "text-white" : "text-[#5a698f]"
-                    }
-                    end={id === 1}
-                    title={title}
-                  >
-                    {content}
-                  </NavLink>
-                );
-              })}
-            </div>
-          </div>
-          <img src={profilePicture} alt="Profile picture" />
-        </div>
-      </div>
 
-      <div className=" sticky top-0 flex lg:hidden justify-between items-center w-full bg-[#161D2F] p-3 md:py-[35px] md:px-[32px] ">
-        <img src={Logo} alt="logo" />
-        <div className="flex lg:flex-col justify-between gap-[32px] md:gap-[40px]   ">
+  return (
+    <div className=" lg:mx-[5px] sticky top-0 left-0 max-h-screen z-10 ">
+      <div className="w-full relative bg-[#161d2f] py-[18px] px-[16px] flex items-center justify-between  md:py-[24px] md:px-[24px] lg:absolute lg:flex-col lg:justify-center lg:items-center lg:top-[32px] lg:left-[32px] lg:max-w-[96px] lg:rounded-[20px] lg:py-[35.41px] lg:px-[31.86px]  ">
+        <Link to="/">
+          <img
+            src={redmovie}
+            alt=""
+            className="w-[25px] h-[20px] md:w-[32px] md:h-[25.6px]"
+          />
+        </Link>
+
+        <div className="w-[133.54px] flex items-center justify-between md:w-[172.92px] lg:flex-col lg:justify-center lg:items-center lg:gap-[40px] lg:mt-[74.99px]">
           {links.map((link) => {
             const { id, title, to, content } = link;
             return (
@@ -85,7 +72,14 @@ const Sidebar = () => {
             );
           })}
         </div>
-        <img src={profilePicture} alt="Profile picture" />
+
+        <div className="lg:mt-[200px]">
+          <img
+            src={logo}
+            alt="applogo"
+            className="w-[24px] md:w-[32px] lg:w-[40px] cursor-pointer"
+          />
+        </div>
       </div>
     </div>
   );

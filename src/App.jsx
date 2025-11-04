@@ -1,33 +1,59 @@
-import React from "react";
 import "./App.css";
-import { lazy, Suspense } from "react";
-const Register = lazy(() => import("./pages/Register"));
-const Login = lazy(() => import("./pages/Login"));
-const Home = lazy(() => import("./pages/Home"));
-const Movies = lazy(() => import("./pages/Movies"));
-const TvSeries = lazy(() => import("./pages/TvSeries"));
-const Bookmarked = lazy(() => import("./pages/Bookmarked"));
-const Error404 = lazy(() => import("./pages/Error404"));
-import DashboardLayout from "./layout/DashboardLayout";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-const App = () => {
-  return (
-    <Suspense fallback={<h1>Loading Movie App</h1>}>
-      <Router>
-        <Routes>
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<DashboardLayout />}>
-            <Route index element={<Home />} />
-            <Route path="movies" element={<Movies />} />
-            <Route path="tv-series" element={<TvSeries />} />
-            <Route path="bookmarked" element={<Bookmarked />} />
-          </Route>
-          <Route path="*" element={<Error404 />} />
-        </Routes>
-      </Router>
-    </Suspense>
-  );
+import { lazy, Suspense } from "react";
+
+const Home = lazy(() => import("./pages/Home/Home"));
+
+const Movies = lazy(() => import("./pages/Movies"));
+
+const TvSeries = lazy(() => import("./pages/TvSeries"));
+
+const Login = lazy(() => import("./pages/Login"));
+
+const Register = lazy(() => import("./pages/Register"));
+
+const Bookmark = lazy(() => import("./pages/Bookmark"));
+
+const Error = lazy(() => import("./pages/Error404"));
+
+const RootLayout = lazy(() => import("./layout/RootLayout"));
+
+import { Toaster } from "react-hot-toast";
+import { AuthProvider } from "./context/AuthContext";
+import Loading from "./utils/Loading";
+import PrivateRoute from "./utils/PrivateRoute";
+
+const prefetch = (importFn) => {
+  importFn();
 };
 
+function App() {
+  return (
+    <>
+      <Router>
+        <Toaster position="top-right" />
+        <AuthProvider>
+          <Suspense fallback={<Loading />}>
+            <Routes>
+              <Route element={<RootLayout />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/movies" element={<Movies />} />
+                <Route path="/tv-series" element={<TvSeries />} />
+                <Route element={<PrivateRoute />}>
+                  <Route path="/bookmark" element={<Bookmark />} />
+                </Route>
+              </Route>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="*" element={<Error />} />
+            </Routes>
+          </Suspense>
+        </AuthProvider>
+      </Router>
+    </>
+  );
+}
+
 export default App;
+
+// https://techflix-backend.onrender.com
